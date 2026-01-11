@@ -17,6 +17,7 @@ datasource db {
 
 model User{
   id  String @id @default(uuid())
+  Firstname String
   email String @unique
   password String
   transactions Transaction[]

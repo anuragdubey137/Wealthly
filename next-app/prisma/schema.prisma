@@ -17,7 +17,6 @@ datasource db {
 
 model User{
   id  String @id @default(uuid())
-  Firstname String
   email String @unique
   password String
   transactions Transaction[]
@@ -33,7 +32,7 @@ model Transaction{
   category String
 
   date  DateTime
-  createdAt  DateTime @default(now())
+  createdAt  DateTime @default(now()) 
   updatedAt  DateTime @updatedAt
   deletedAt  DateTime?
 }

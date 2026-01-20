@@ -36,7 +36,25 @@ export async function POST(req:NextRequest) {
 
 }
 export async function GET(req:NextRequest) {
-    return new Response('Transaction API is working');
+    const session = await getServerSession();
+    if(!session || !session.user){
+
+        return new Response('Unauthorized', { status: 401 });
+    }
+    if (!session.user.email) {
+        return new Response('Unauthorized', { status: 401 });
+    }
+    const transactions = await prisma.transaction.findMany({
+        where: {
+            user: {
+                email: session.user.email
+            }
+        },
+        orderBy: {
+            date: 'desc'
+        }
+    });
+    return new Response(JSON.stringify(transactions), { status: 200 });
 }
 export async function PUT(req:NextRequest) {
     return new Response('Transaction updated successfully');
